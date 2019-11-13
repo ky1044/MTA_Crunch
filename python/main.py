@@ -1,13 +1,23 @@
 import sys 
+import json
+
 TrainLine = sys.argv[1]
 StartStation = sys.argv[2]
 EndStation = sys.argv[3]
 ArrivalTime = sys.argv[4]
 
-print("Train Line: " + StartStation) 
-print("Starting station: " + StartStation) 
-print("Ending station: " + EndStation)
-print("Time of Arrival: " + ArrivalTime)
+
+outputjson = {
+	'train line':TrainLine,
+	'starting station':StartStation,
+	'ending station':EndStation,
+	'arrival time':ArrivalTime,
+	'data':60,
+	'commute-time':32
+
+}
+
+print(json.dumps(outputjson))
 
 #
 #TODO

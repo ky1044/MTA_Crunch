@@ -5,26 +5,60 @@ app.listen(1904,()=> console.log("listening at 1904"));
 app.use(express.static('public'));
 app.use(express.json({limit:'1mb'}));
 
+const { spawn } = require('child_process')
+const logOutput = (name) => (message) => console.log(`[${name}] ${message}`)
 
-
-app.post('/commuterequest',(request,response)=>{
-    console.log(request.body);
-
-
-    var spawn = require("child_process").spawn; 
-
-    var process = spawn('python',["./main.py", 
-                            request.body.TrainLine,
-                            request.body.StartStation, 
-                            request.body.EndStation,
-                            request.body.ArrivalTime,
+function run(TrainLine, StartStation, EndStation,ArrivalTime) {
+  return new Promise((resolve, reject) => {
+    var process = spawn('python',["./python/main.py", 
+                            TrainLine,
+                            StartStation, 
+                            EndStation,
+                            ArrivalTime,
                             ] ); 
 
-    response.json({
-        status:"success, more to come!"
+    const out = []
+    process.stdout.on(
+      'data',
+      (data) => {
+        out.push(data.toString());
+        logOutput('stdout')(data);
+      }
+    );
+
+
+    const err = []
+    process.stderr.on(
+      'data',
+      (data) => {
+        err.push(data.toString());
+        logOutput('stderr')(data);
+      }
+    );
+
+    process.on('exit', (code, signal) => {
+      logOutput('exit')(`${code} (${signal})`)
+      if (code !== 0) {
+        reject(new Error(err.join('\n')))
+        return
+      }
+      try {
+        resolve(JSON.parse(out[0]));
+      } catch(e) {
+        reject(e);
+      }
     });
+  });
+}
 
 
+app.post('/commuterequest',async function(request,response){
+    console.log(request.body);
 
+    const outputjson =await run(request.body.TrainLine,request.body.StartStation, request.body.EndStation, request.body.ArrivalTime);
+
+    console.log(outputjson);
+
+    response.json(outputjson);
 });
 
