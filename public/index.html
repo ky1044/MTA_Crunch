@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hello</title>
+  </head>
+  <body>
+    <script>
+
+      const line = "6";
+      const startS = "Astor Pl";
+      const endS = "91st St";
+      const ATime = "0900";
+
+      async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime){
+        const data = {TrainLine, StartStation, EndStation, ArrivalTime};
+        const commuterequest = {
+            method: 'POST',
+            headers:{
+              'Content-Type':'application/json'
+            },
+            body: JSON.stringify(data)
+            
+          }
+
+        const response = await fetch('/commuterequest',commuterequest);
+        const response_data = await response.json();
+        console.log(response_data);
+      }
+
+      requestCommute(line,startS,endS,ATime);
+
+
+    </script>
+    <h1>MTA Crunch</h1>
+  </body>
+</html>

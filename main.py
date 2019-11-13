@@ -1,8 +1,10 @@
 import sys 
-StartStation = sys.argv[1]
-EndStation = sys.argv[2]
-ArrivalTime = sys.argv[3]
+TrainLine = sys.argv[1]
+StartStation = sys.argv[2]
+EndStation = sys.argv[3]
+ArrivalTime = sys.argv[4]
 
+print("Train Line: " + StartStation) 
 print("Starting station: " + StartStation) 
 print("Ending station: " + EndStation)
 print("Time of Arrival: " + ArrivalTime)
