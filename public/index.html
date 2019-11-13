@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>MTA Crunch</title>
   </head>
   <body>
     <script>
 
-      const line = "6";
-      const startS = "Astor Pl";
+      const line = "6";//the 6 train. all lines should be a one character string, letter lines should be capitalized
+      const startS = "Astor Pl";//start and end station must exactly match station names given in stops.txt
       const endS = "91st St";
-      const ATime = "0900";
+      const ATime = "0900";// time of day in string format ranging from 0000 (12:00AM) to 2359 (11:59PM)
 
       async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime){
         const data = {TrainLine, StartStation, EndStation, ArrivalTime};
@@ -33,6 +30,7 @@
       requestCommute(line,startS,endS,ATime).then(response =>{
         commute_data = response;
         console.log(commute_data);
+        document.getElementById("return").innerHTML = JSON.stringify(commute_data);
       });
 
       
@@ -40,5 +38,6 @@
 
     </script>
     <h1>MTA Crunch</h1>
+    <p id ="return"></p>
   </body>
 </html>

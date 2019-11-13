@@ -1,12 +1,37 @@
 import sys 
 import json
 
-TrainLine = sys.argv[1]
-StartStation = sys.argv[2]
-EndStation = sys.argv[3]
-ArrivalTime = sys.argv[4]
+import importdata
+
+#getting input
+try:
+	TrainLine = sys.argv[1]
+	StartStation = sys.argv[2]
+	EndStation = sys.argv[3]
+	ArrivalTime = sys.argv[4] 
+except:
+	TrainLine = "6"
+	StartStation = "Astor Pl"
+	EndStation = "91st St"
+	ArrivalTime = "0900"
 
 
+try:
+	#importing dataset
+	ss = importdata.NameToID(TrainLine,StartStation)
+	es = importdata.NameToID(TrainLine,EndStation)
+	commute_data1 = importdata.ImportMTA()
+	commute_data2 = importdata.filterStations(commute_data1,ss,es)
+	commute_data = importdata.filterTimes(commute_data2,ArrivalTime)
+
+	#analysis
+except:
+	pass
+
+
+
+#formatting output
+#test output
 outputjson = {
 	'train line':TrainLine,
 	'starting station':StartStation,
@@ -18,9 +43,3 @@ outputjson = {
 }
 
 print(json.dumps(outputjson))
-
-#
-#TODO
-#create method to get station id from station name and train line
-#create method to extract rows from mta.txt based on arrival time
-#figure out how to store the data, probably in dataframe

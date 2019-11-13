@@ -7,7 +7,7 @@ app.use(express.json({limit:'1mb'}));
 
 const { spawn } = require('child_process')
 const logOutput = (name) => (message) => console.log(`[${name}] ${message}`)
-
+//below function taken from "https://codewithhugo.com/integrate-python-ruby-php-shell-with-node-js/" Thank you!
 function run(TrainLine, StartStation, EndStation,ArrivalTime) {
   return new Promise((resolve, reject) => {
     var process = spawn('python',["./python/main.py", 
@@ -25,7 +25,6 @@ function run(TrainLine, StartStation, EndStation,ArrivalTime) {
         logOutput('stdout')(data);
       }
     );
-
 
     const err = []
     process.stderr.on(
