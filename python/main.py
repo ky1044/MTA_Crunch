@@ -9,13 +9,13 @@ try:
 	StartStation = sys.argv[2]
 	EndStation = sys.argv[3]
 	ArrivalTime = sys.argv[4] 
-	DayofWeek = sys.argv[5] 
+	ArrivalDate = sys.argv[5] 
 except:
 	TrainLine = "6"
 	StartStation = "Astor Pl"
-	EndStation = "91st St"
+	EndStation = "103 St"
 	ArrivalTime = "0900"
-	DayofWeek = "Weekday"
+	ArrivalDate = "Weekday"
 
 
 
@@ -26,14 +26,9 @@ try:
 	commute_data = importdata.ImportMTA()
 	DepartureData, ArrivalData = importdata.filterStations(commute_data,ss,es)
 	filteredArrivalData1 = importdata.filterTimes(ArrivalData,ArrivalTime)
-	filteredArrivalData = importdata.filterDates(filteredArrivalData1,DayofWeek)
+	filteredArrivalData = importdata.filterDates(filteredArrivalData1,ArrivalDate)
 	filteredDepartureData = DepartureData[DepartureData['trip_id'].isin(filteredArrivalData['trip_id'])]
 
-
-
-
-	# commute_data3 = importdata.filterTimes(commute_data2,ArrivalTime,es)
-	# commute_data = importdata.filterDates(commute_data3,ArrivalTime)
 
 	#analysis
 except:
@@ -48,7 +43,7 @@ outputjson = {
 	'starting station':StartStation,
 	'ending station':EndStation,
 	'arrival time':ArrivalTime,
-	'date':DayofWeek,
+	'arrival date':ArrivalDate,
 	'data':60,
 	'commute-time':32
 
