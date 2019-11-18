@@ -23,10 +23,17 @@ try:
 	#importing dataset
 	ss = importdata.NameToID(TrainLine,StartStation)
 	es = importdata.NameToID(TrainLine,EndStation)
-	commute_data1 = importdata.ImportMTA()
-	commute_data2 = importdata.filterStations(commute_data1,ss,es)
-	commute_data3 = importdata.filterTimes(commute_data2,ArrivalTime)
-	commute_data = importdata.filterDates(commute_data2,ArrivalTime)
+	commute_data = importdata.ImportMTA()
+	DepartureData, ArrivalData = importdata.filterStations(commute_data,ss,es)
+	filteredArrivalData1 = importdata.filterTimes(ArrivalData,ArrivalTime)
+	filteredArrivalData = importdata.filterDates(filteredArrivalData1,DayofWeek)
+	filteredDepartureData = DepartureData[DepartureData['trip_id'].isin(filteredArrivalData['trip_id'])]
+
+
+
+
+	# commute_data3 = importdata.filterTimes(commute_data2,ArrivalTime,es)
+	# commute_data = importdata.filterDates(commute_data3,ArrivalTime)
 
 	#analysis
 except:

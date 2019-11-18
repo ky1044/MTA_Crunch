@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 #using the given train line and station name, returns the station ID
 #data from stops.txt
@@ -17,15 +18,20 @@ def ImportMTA():
 #fitler dataframe from ImportMTA to only relevant information
 #i.e. only when the start station or stop station is mentioned
 def filterStations(DF,startID,endID):
-	return DF[DF['stop_id'].isin([startID,endID])]
+	# return DF[DF['stop_id'].isin([startID,endID])]
+	return DF[DF['stop_id']==startID], DF[DF['stop_id']==endID]
 
 
 #fitler dataframe from filterStations to add time constraint to data
-#dataframe will then be passed to Analysis
-def filterTimes(DF,arrival):
-	
+def filterTimes(DF,arrivalTime):
+	TargetMinute = int(arrivalTime[:2])*60+int(arrivalTime[2:])
+	return DF[abs(DF['arrival_time'].apply(lambda x: 60*int(x[:2])+int(x[3:5]))-TargetMinute)<=30]
 
-	return DF2
+#fitler dataframe from filterTimes to add date constraint to data
+#dataframe will then be passed to Analysis
+def filterDates(DF,arrivalDate):
+
+	return DF[DF['trip_id'].apply(lambda x: arrivalDate.lower() in x.lower())]
 
 
 if __name__ == "__main__":
@@ -33,9 +39,15 @@ if __name__ == "__main__":
 	print(DF)
 	print(DF.dtypes)
 
-	DF2 = filterStations(DF,"101S","106S")
-	print(DF2)
-	print(DF2.dtypes)
+	DDF,ADF = filterStations(DF,"624S","636S")
+	print(ADF)
+	print(DDF)
 
-	ss = ""
-	es = ""
+	FADF1=filterTimes(ADF,"1700")
+	print(FADF1)
+
+	FADF = filterDates(FADF1,"Weekday")
+	print(FADF)
+
+	FDDF = DDF[DDF['trip_id'].isin(FADF['trip_id'])]
+	print(FDDF)
