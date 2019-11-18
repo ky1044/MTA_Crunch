@@ -1,13 +1,13 @@
 import pandas as pd
 from datetime import datetime
+import stops
 
 #using the given train line and station name, returns the station ID
 #data from stops.txt
 #must be careful because stations have different IDs based on what train line is using them
 #Suggestion: create a dictionary for each line in this script that stores Name to ID conversion
 def NameToID(line,stationName):
-
-	return stationID
+	return stops.table[line][stationName]
 
 #convert mta.txt to dataframe
 def ImportMTA():
@@ -18,8 +18,12 @@ def ImportMTA():
 #fitler dataframe from ImportMTA to only relevant information
 #i.e. only when the start station or stop station is mentioned
 def filterStations(DF,startID,endID):
+	#Version 1
 	# return DF[DF['stop_id'].isin([startID,endID])]
-	return DF[DF['stop_id']==startID], DF[DF['stop_id']==endID]
+	#Version 2
+	# return DF[DF['stop_id']==startID], DF[DF['stop_id']==endID]
+	#Version 3
+	return DF[DF['stop_id'].apply(lambda x:startID == x[:-1])], DF[DF['stop_id'].apply(lambda x:endID == x[:-1])]
 
 
 #fitler dataframe from filterStations to add time constraint to data
@@ -38,8 +42,10 @@ if __name__ == "__main__":
 	DF=ImportMTA()
 	print(DF)
 	print(DF.dtypes)
+	firstStop = NameToID("6","103 St")
+	lastStop = NameToID("6","Astor Pl")
 
-	DDF,ADF = filterStations(DF,"624S","636S")
+	DDF,ADF = filterStations(DF,firstStop,lastStop)
 	print(ADF)
 	print(DDF)
 
@@ -51,3 +57,4 @@ if __name__ == "__main__":
 
 	FDDF = DDF[DDF['trip_id'].isin(FADF['trip_id'])]
 	print(FDDF)
+
