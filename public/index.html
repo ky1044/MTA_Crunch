@@ -10,9 +10,10 @@
       const startS = "Astor Pl";//start and end station must exactly match station names given in stops.txt
       const endS = "91st St";
       const ATime = "0900";// time of day in string format ranging from 0000 (12:00AM) to 2359 (11:59PM)
+      const ADate = "Weekday";// day of week in string format, can only be "Weekday", "Saturday", or "Sunday"
 
-      async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime){
-        const data = {TrainLine, StartStation, EndStation, ArrivalTime};
+      async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime,DayofWeek){
+        const data = {TrainLine, StartStation, EndStation, ArrivalTime,DayofWeek};
         const commuterequest = {
             method: 'POST',
             headers:{
@@ -27,7 +28,7 @@
         return response_data;
       }
 
-      requestCommute(line,startS,endS,ATime).then(response =>{
+      requestCommute(line,startS,endS,ATime,ADate).then(response =>{
         commute_data = response;
         console.log(commute_data);
         document.getElementById("return").innerHTML = JSON.stringify(commute_data);
