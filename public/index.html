@@ -8,12 +8,12 @@
 
       const line = "6";//the 6 train. all lines should be a one character string, letter lines should be capitalized
       const startS = "Astor Pl";//start and end station must exactly match station names given in stops.txt
-      const endS = "91st St";
+      const endS = "103 St";
       const ATime = "0900";// time of day in string format ranging from 0000 (12:00AM) to 2359 (11:59PM)
       const ADate = "Weekday";// day of week in string format, can only be "Weekday", "Saturday", or "Sunday"
 
-      async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime,DayofWeek){
-        const data = {TrainLine, StartStation, EndStation, ArrivalTime,DayofWeek};
+      async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime, ArrivalDate){
+        const data = {TrainLine, StartStation, EndStation, ArrivalTime, ArrivalDate};
         const commuterequest = {
             method: 'POST',
             headers:{

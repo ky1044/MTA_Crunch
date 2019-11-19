@@ -43,7 +43,7 @@ outputjson = {
 	'starting station':StartStation,
 	'ending station':EndStation,
 	'arrival time':ArrivalTime,
-	'arrival date':ArrivalDate,
+	'arrival date':DayofWeek,
 	'data':60,
 	'commute-time':32
 
