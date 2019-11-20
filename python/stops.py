@@ -1,9 +1,28 @@
 #nested dictionary
 #first depth of keys are lines, in which all key/values of stop name/stop ids are provided for that particular line. 
 #station ids should not include direction of train, like 636S or 636N, just 636
-table = {
-	"6":{
-		"Astor Pl": "636",
-		"103 St":"624"
-	}
-}
+"1":["Van Cortlandt Park-242 Street", "238 Street", "231 Street", "Marble Hill-225 Street", "215 Street", "207 Street", "Dyckman Street", "191 Street", "181 Street", "168 Street-Washington Heights", "157 Street", "145 Street", "137 Street-City College", "125 Street", "116 Street-Columbia University", "Cathedral Parkway", "103 Street", "96 Street", "86 Street", '79 Street', '72 Street', '66 Street-Lincoln Center', '59 Street-Columbus Circle', '50 Street', 'Times Square-42 Street', '34 Street-Penn Station', '23 Street', '18 Street', '14 Street', 'Christopher Street-Sheridan Square', 'Houston Street', 'Canal Street', 'Franklin Street', 'Chambers Street', 'WTC Cortlandt', 'Rector Street', 'South Ferry']
+"2":['Wakefield-241 Street', 'Nereid Avenue', '233 Street', '225 Street', '219 Street', 'Gun Hill Road', 'Burke Avenue', 'Allerton Avenue', 'Pelham Parkway', 'Bronx Park East', 'East 180 Street', 'WEst Farms Square-East Remont Avenue', '174 Street', 'Freeman Street', 'Simpson Street', 'Intervale Avenue', 'Prospect Avenue', '3 Avenue-149 Street', '149 Street-Grand Concourse', '135 Street', '125 Street', '116 Street', 'Central Park North', '96 Street', '86 Street', '79 Street', '72 Street', '66 Street-Lincoln Center', '59 Street-Columbus Circle', '50 Street', 'Times Square-42 Street', '34 Street-Penn Station', '28 Street', '23 Street', '18 Street', '14 Street', 'Christopher Street-Sheridan Sq', 'Houston Street', 'Canal Street', 'Franklin Street', 'Chambers Street', 'Park Place', 'Fulton Street', 'Wall Street', 'Clark Street', 'Borough Hall', 'Hoyt Street', 'Nevins Street', 'Atlantic Avenue', 'Bergen Street', 'Grand Army Plaza', ' Eastern Parkway-Brooklyn Museum', 'Franklin Avenue', 'President Street', 'Sterling Street', 'Winthrop Street', 'Church Avenue', 'Beverly Road', 'Newkirk Aveue', 'Flatbush Avenue-Brooklyn College']
+'3':[]
+'4':[]
+'5':[]
+'6L':[]
+'6E':[]
+'7L':[]
+'7E':[]
+'A':[]
+'B':[]
+'C':[]
+'D':[]
+'E':[]
+'F':[]
+'G':[]
+'J':[]
+'L':[]
+'M':[]
+'N':[]
+'Q':[]
+'R':[]
+'S':[]
+'W':[]
+'Z':[]
