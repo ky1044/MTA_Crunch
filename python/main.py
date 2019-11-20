@@ -2,6 +2,7 @@ import sys
 import json
 
 import importdata
+import analysis
 
 #getting input
 try:
@@ -31,6 +32,8 @@ try:
 
 
 	#analysis
+	commuteTime = analysis.mainmethod()
+	
 except:
 	pass
 
@@ -43,7 +46,7 @@ outputjson = {
 	'starting station':StartStation,
 	'ending station':EndStation,
 	'arrival time':ArrivalTime,
-	'arrival date':DayofWeek,
+	'arrival date':ArrivalDate,
 	'data':60,
 	'commute-time':32
 
