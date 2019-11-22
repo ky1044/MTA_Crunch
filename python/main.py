@@ -2,6 +2,7 @@ import sys
 import json
 
 import importdata
+import analysis
 
 #getting input
 try:
@@ -19,20 +20,18 @@ except:
 
 
 
-try:
-	#importing dataset
-	ss = importdata.NameToID(TrainLine,StartStation)
-	es = importdata.NameToID(TrainLine,EndStation)
-	commute_data = importdata.ImportMTA()
-	DepartureData, ArrivalData = importdata.filterStations(commute_data,ss,es)
-	filteredArrivalData1 = importdata.filterTimes(ArrivalData,ArrivalTime)
-	filteredArrivalData = importdata.filterDates(filteredArrivalData1,ArrivalDate)
-	filteredDepartureData = DepartureData[DepartureData['trip_id'].isin(filteredArrivalData['trip_id'])]
 
+#importing dataset
+commute_data = importdata.AddStopNames(importdata.ImportMTA())
+DepartureData, ArrivalData = importdata.filterStations(commute_data,StartStation,EndStation)
+filteredArrivalData1 = importdata.filterTimes(ArrivalData,ArrivalTime)
+filteredArrivalData2 = importdata.filterDates(filteredArrivalData1,ArrivalDate)
+filteredDepartureData = DepartureData[DepartureData['trip_id'].isin(filteredArrivalData2['trip_id'])]
+filteredArrivalData = filteredArrivalData2[filteredArrivalData2['trip_id'].isin(filteredDepartureData['trip_id'])]
 
-	#analysis
-except:
-	pass
+#analysis
+dataStructureofChoice = analysis.analyze(filteredDepartureData,filteredArrivalData,TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate)
+
 
 
 
@@ -43,9 +42,10 @@ outputjson = {
 	'starting station':StartStation,
 	'ending station':EndStation,
 	'arrival time':ArrivalTime,
-	'arrival date':DayofWeek,
+	'arrival date':ArrivalDate,
 	'data':60,
-	'commute-time':32
+	'commute-time':32,
+	'data':dataStructureofChoice
 
 }
 

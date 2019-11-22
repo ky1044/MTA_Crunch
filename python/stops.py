@@ -1,28 +1,28 @@
 #nested dictionary
 #first depth of keys are lines, in which all key/values of stop name/stop ids are provided for that particular line. 
 #station ids should not include direction of train, like 636S or 636N, just 636
-"1":["Van Cortlandt Park  -  242 St", "238 St", "231 St", "Marble Hill - 225 St", "215 St", "207 St", "Dyckman St", "191 St", "181 St", "168 St - Washington Hts", "157 St", "145 St", "137 St - City College", "125 St", "116 St - Columbia University", "Cathedral Pkwy (110 St)", "103 St", "96 St", "86 St", '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Square - 42 St', '34 St - Penn Station', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Square', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'WTC Cortlandt', 'Rector St', 'South Ferry']
-"2":['Wakefield - 241 St', 'Nereid Av', '233 St', '225 St', '219 St', 'Gun Hill Rd', 'Burke Av', 'Allerton Av', 'Pelham Pkwy', 'Bronx Park East', 'East 180 St', 'WEst Farms Square - East Remont Av', '174 St', 'Freeman St', 'Simpson St', 'Intervale Av', 'Prospect Av', '3 Av - 149 St', '149 St - Grand Concourse', '135 St', '125 St', '116 St', 'Central Park North (110 St)', '96 St', '86 St', '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Square - 42 St', '34 St - Penn Station', '28 St', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Sq', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'Park Pl', 'Fulton St', 'Wall St', 'Clark St', 'Borough Hall', 'Hoyt St', 'Nevins St', 'Atlantic Av', 'Bergen St', 'Grand Army Plaza', ' Eastern Pkwy - Brooklyn Museum', 'Franklin Av', 'President St', 'Sterling St', 'Winthrop St', 'Church Av', 'Beverly Rd', 'Newkirk Aveue', 'Flatbush Av - Brooklyn College']
-'3':[]
-'4':[]
-'5':[]
-'6L':[]
-'6E':[]
-'7L':[]
-'7E':[]
-'A':[]
-'B':[]
-'C':[]
-'D':[]
-'E':[]
-'F':[]
-'G':[]
-'J':[]
-'L':[]
-'M':[]
-'N':[]
-'Q':[]
-'R':[]
-'S':[]
-'W':[]
-'Z':[]
+table ={"1":["Van Cortlandt Park  -  242 St", "238 St", "231 St", "Marble Hill - 225 St", "215 St", "207 St", "Dyckman St", "191 St", "181 St", "168 St - Washington Hts", "157 St", "145 St", "137 St - City College", "125 St", "116 St - Columbia University", "Cathedral Pkwy (110 St)", "103 St", "96 St", "86 St", '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Square - 42 St', '34 St - Penn Station', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Square', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'WTC Cortlandt', 'Rector St', 'South Ferry'],
+"2":['Wakefield - 241 St', 'Nereid Av', '233 St', '225 St', '219 St', 'Gun Hill Rd', 'Burke Av', 'Allerton Av', 'Pelham Pkwy', 'Bronx Park East', 'East 180 St', 'WEst Farms Square - East Remont Av', '174 St', 'Freeman St', 'Simpson St', 'Intervale Av', 'Prospect Av', '3 Av - 149 St', '149 St - Grand Concourse', '135 St', '125 St', '116 St', 'Central Park North (110 St)', '96 St', '86 St', '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Square - 42 St', '34 St - Penn Station', '28 St', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Sq', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'Park Pl', 'Fulton St', 'Wall St', 'Clark St', 'Borough Hall', 'Hoyt St', 'Nevins St', 'Atlantic Av', 'Bergen St', 'Grand Army Plaza', ' Eastern Pkwy - Brooklyn Museum', 'Franklin Av', 'President St', 'Sterling St', 'Winthrop St', 'Church Av', 'Beverly Rd', 'Newkirk Aveue', 'Flatbush Av - Brooklyn College'],
+'3':[],
+'4':[],
+'5':[],
+'6L':[],
+'6E':[],
+'7L':[],
+'7E':[],
+'A':[],
+'B':[],
+'C':[],
+'D':[],
+'E':[],
+'F':[],
+'G':[],
+'J':[],
+'L':[],
+'M':[],
+'N':[],
+'Q':[],
+'R':[],
+'S':[],
+'W':[],
+'Z':[]}
