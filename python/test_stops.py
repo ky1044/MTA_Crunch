@@ -6,7 +6,7 @@ stopsDF = pd.read_csv("../gtfs/stops.txt")[['stop_id','stop_name']]
 stopsDict = dict(zip( stopsDF.stop_name,stopsDF.stop_id))
 
 for line,stops in table.items():
-	print(line)
+	print("checking line "+line)
 	for s in stops:
 		if s not in stopsDict.keys():
-			print("Format Error: line "+line+", stop "+s)
+			print("Format Error: line"+line+", stop "+s)
