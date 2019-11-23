@@ -11,7 +11,8 @@ try:
 	EndStation = sys.argv[3]
 	ArrivalTime = sys.argv[4] 
 	ArrivalDate = sys.argv[5] 
-except:
+except Exception as e:
+	print("Error:"+str(e))
 	TrainLine = "6"
 	StartStation = "Astor Pl"
 	EndStation = "103 St"
