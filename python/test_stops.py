@@ -9,4 +9,5 @@ for line,stops in table.items():
 	print("checking line "+line)
 	for s in stops:
 		if s not in stopsDict.keys():
-			print("Format Error: line"+line+", stop "+s)
+			print("Format error on line "+line+": "+s)
+			
