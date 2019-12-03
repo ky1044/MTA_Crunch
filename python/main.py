@@ -38,6 +38,7 @@ dataStructureofChoice = analysis.analyze(filteredDepartureData,filteredArrivalDa
 
 #formatting output
 #test output
+
 outputjson = {
 	'train line':TrainLine,
 	'starting station':StartStation,
