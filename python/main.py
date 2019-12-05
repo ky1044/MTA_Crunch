@@ -2,7 +2,7 @@ import sys
 import json
 
 import importdata
-import analysis
+import analysis2
 
 #getting input
 try:
@@ -31,7 +31,7 @@ filteredDepartureData = DepartureData[DepartureData['trip_id'].isin(filteredArri
 filteredArrivalData = filteredArrivalData2[filteredArrivalData2['trip_id'].isin(filteredDepartureData['trip_id'])]
 
 #analysis
-dataStructureofChoice = analysis.analyze(filteredDepartureData,filteredArrivalData,TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate)
+dataStructureofChoice = analysis2.analyze(filteredDepartureData,filteredArrivalData,TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate)
 
 
 

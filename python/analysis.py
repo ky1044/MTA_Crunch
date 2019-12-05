@@ -116,7 +116,7 @@ df6['sum'] = df6.b.cumsum()
 for i in [df1, df2, df3, df4, df5, df6]:
     i.dropna(how='any', inplace=True)
 
- X = pd.to_numeric(df1['a'])
+X = pd.to_numeric(df1['a'])
 y = pd.to_numeric(df1['b'].cumsum())
 m1, b1 = np.polyfit(X, y, deg=1)
 X_test = np.linspace(1, 5000, 1000)
