@@ -10,13 +10,13 @@ def NameToID(line,stationName):
 
 #convert mta.txt to dataframe
 def ImportMTA():
-	gtfsDF = pd.read_csv("gtfs/stop_times.txt")
+	gtfsDF = pd.read_csv("../gtfs/stop_times.txt")
 	relevantDF = gtfsDF[['trip_id','stop_id','arrival_time','departure_time']]
 	return relevantDF
 	
 
 def AddStopNames(DF):
-	stopsDF = pd.read_csv("gtfs/stops.txt")
+	stopsDF = pd.read_csv("../gtfs/stops.txt")
 	stopsDF = stopsDF[['stop_id','stop_name']]
 
 	stopsDict = dict(zip(stopsDF.stop_id, stopsDF.stop_name))
@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
 	firstStop = "103 St"
 	lastStop = "Astor Pl"
-	arrivalTime = "0900"
+	arrivalTime = "0930"
 	arrivalDate = "Weekday"
 
 	DDF,ADF = filterStations(DF,firstStop,lastStop)
@@ -66,9 +66,11 @@ if __name__ == "__main__":
 
 	FDDF = DDF[DDF['trip_id'].isin(FADF2['trip_id'])]
 	FADF = FADF2[FADF2['trip_id'].isin(FDDF['trip_id'])]
-
+	print("Final DFs\n\n")
 	print(FDDF)
+	print(FDDF.count+1)
 	print(FADF)
+	print(FDDF.count+1)
 
 
 
