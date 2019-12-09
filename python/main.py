@@ -1,8 +1,7 @@
 import sys 
 import json
 
-import importdata
-import analysis2
+import analysis
 
 #getting input
 try:
@@ -21,17 +20,8 @@ except Exception as e:
 
 
 
-
-#importing dataset
-commute_data = importdata.AddStopNames(importdata.ImportMTA())
-DepartureData, ArrivalData = importdata.filterStations(commute_data,StartStation,EndStation)
-filteredArrivalData1 = importdata.filterTimes(ArrivalData,ArrivalTime)
-filteredArrivalData2 = importdata.filterDates(filteredArrivalData1,ArrivalDate)
-filteredDepartureData = DepartureData[DepartureData['trip_id'].isin(filteredArrivalData2['trip_id'])]
-filteredArrivalData = filteredArrivalData2[filteredArrivalData2['trip_id'].isin(filteredDepartureData['trip_id'])]
-
 #analysis
-dataStructureofChoice = analysis2.analyze(filteredDepartureData,filteredArrivalData,TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate)
+commute_results = analysis.analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate)
 
 
 
@@ -45,9 +35,7 @@ outputjson = {
 	'ending station':EndStation,
 	'arrival time':ArrivalTime,
 	'arrival date':ArrivalDate,
-	'data':60,
-	'commute-time':32,
-	'data':dataStructureofChoice
+	'data':commute_results
 
 }
 
