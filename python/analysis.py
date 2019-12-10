@@ -6,7 +6,7 @@ import os
 import glob
 dirname = os.path.dirname(__file__)
 foldername = os.path.join(dirname, '/data/*.txt')
-print(foldername)
+# print(foldername)
 
 
 def getname(id,stopsDict):
@@ -96,5 +96,5 @@ def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 	}
 
 
-print(analyze("R","Canal St","23 St","0800","Weekday"))
+# print(analyze("R","Canal St","23 St","0800","Weekday"))
 # print(analyze("6","Astor Pl","103 St","0800","Weekday"))
