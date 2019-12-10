@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker, Checkbox,Radio} from 'antd';
+import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker,Radio} from 'antd';
 
 const stations = [{name: 'Van Cortlandt Park - 242 St',},
 {name: '238 St',},
@@ -57,13 +57,15 @@ class App extends React.Component {
       selectedDepartureStation: null,
       selectedArrivalStation: null,
       selectedArrivalTime: null,
-      selectedArrivalDate:"Weekend",
+      selectedArrivalDate:"Weekday",
       selectedLine:null,
       data: null,
+      request:null,
       
     };
     // this.commuteRequest = this.commuteRequest.bind(this)
     // this.onTimeChange = this.onTimeChange.bind(this)
+    this.userRequest = this.userRequest.bind(this);
 
   }
 
@@ -72,7 +74,24 @@ class App extends React.Component {
     this.setState({
       selectedArrivalDate: e.target.value,
     });
+    console.log(this.state.selectedArrivalDate);
   };
+
+  async userRequest(){
+    await console.log(this.state.selectedArrivalDate)
+    this.setState({
+      request :{
+                  method: 'POST',
+                  headers:{
+                    'Content-Type':'application/json'
+                  },
+                  body: JSON.stringify(this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate)
+                  
+                }
+    })
+    console.log(this.state.request)
+
+  }
 
 
   // componentDidMount() {
@@ -206,7 +225,7 @@ class App extends React.Component {
           <Radio value={"Weekday"}>Weekday</Radio>
           <Radio value={"Weekend"}>Weekend</Radio>
           </Radio.Group><Col span={1}/>
-          <Button type="primary" >Get Commute Time</Button></h4>
+          <Button type="primary" onClick = {this.userRequest}>Get Commute Time</Button></h4>
             <br /><br />
       </Row>
 
