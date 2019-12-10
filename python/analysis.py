@@ -2,6 +2,12 @@ import pandas as pd
 import numpy as np
 import statistics
 
+import os
+import glob
+dirname = os.path.dirname(__file__)
+foldername = os.path.join(dirname, '/data/*.txt')
+print(foldername)
+
 
 def getname(id,stopsDict):
 	if id in stopsDict:
@@ -12,16 +18,14 @@ def getname(id,stopsDict):
 def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 
 	colnames=['DATE', 'TRIP_ID', 'Year', 'ROUTE', 'X', 'Y', 'STOP_ID', 'TIME', 'Z'] 
-	df = pd.read_csv("data/mtaRealTime.txt", names=colnames, header=None)
-	df_Num = pd.read_csv("data/mtaRealTime_Num.txt", names=colnames, header=None)
-	df_Orange = pd.read_csv("data/mtaRealTime_Orange.txt", names=colnames, header=None)
-	df_Alpha = pd.read_csv("data/mtaRealTime_Alpha.txt", names=colnames, header=None)
-	df_G = pd.read_csv("data/mtaRealTime_G.txt", names=colnames, header=None)
-	df_L = pd.read_csv("data/mtaRealTime_L.txt", names=colnames, header=None)
-	df_Brown = pd.read_csv("data/mtaRealTime_Brown.txt", names=colnames, header=None)
-	df_7 = pd.read_csv("data/mtaRealTime_7.txt", names=colnames, header=None)
 
-	all_dfs = [df, df_Num, df_Orange, df_Alpha, df_G, df_L, df_Brown, df_7]
+	all_dfs = []
+	files = [f for f in os.listdir('./data') if os.path.isfile(os.path.join('./data', f))]
+	for file in files:
+		all_dfs.append(pd.read_csv("data/"+file, names=colnames, header=None))
+	DF = pd.concat(all_dfs).reset_index(drop=True)
+
+
 
 	DF = pd.concat(all_dfs).reset_index(drop=True)
 
@@ -92,5 +96,5 @@ def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 	}
 
 
-# print(analyze("R","Canal St","23 St","0800","Weekday"))
+print(analyze("R","Canal St","23 St","0800","Weekday"))
 # print(analyze("6","Astor Pl","103 St","0800","Weekday"))
