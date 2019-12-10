@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Dropdown, Menu, Icon, Slider, InputNumber, Row, Col, Statistic, Button, Tooltip, TimePicker, Checkbox} from 'antd';
+import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker, Checkbox} from 'antd';
 
 const stations = [{name: 'Van Cortlandt Park - 242 St',},
 {name: '238 St',},
@@ -56,28 +55,57 @@ function onChange(time, timeString) {
 }
 
 class App extends React.Component {
-  state = {
-    selectedDepartureStation: null,
-    selectedArrivalStation: null,
-    data: null,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedDepartureStation: null,
+      selectedArrivalStation: null,
+      selectedArrivalTime: null,
+      selectedArrivalDate:null,
+      selectedLine:null,
+      data: null,
+      
+    };
+    // this.commuteRequest = this.commuteRequest.bind(this)
 
-  componentDidMount() {
-      // Call our fetch function below once the component mounts
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
-      .catch(err => console.log(err));
   }
 
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
-    const body = await response.json();
+  // componentDidMount() {
+  //     // Call our fetch function below once the component mounts
+  //   this.callBackendAPI()
+  //     .then(res => this.setState({ data: res.express }))
+  //     .catch(err => console.log(err));
+  // }
 
-    if (response.status !== 200) {
-      throw Error(body.message) 
-    }
-    return body;
-  };
+  // callBackendAPI = async () => {
+  //   const response = await fetch('/express_backend');
+  //   const body = await response.json();
+
+  //   if (response.status !== 200) {
+  //     throw Error(body.message) 
+  //   }
+  //   return body;
+  // };
+
+  // async commuteRequest() {
+  //   this.setState({ data: "requested"});
+  //   // var request_args = {this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate}
+  //   var currentRequest = {
+  //           method: 'POST',
+  //           headers:{
+  //             'Content-Type':'application/json'
+  //           },
+  //           body: JSON.stringify(this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate)
+  //           // body:JSON.stringify({"hello":"world"})
+            
+  //         }
+
+  //   var response = await fetch('/commuterequest',currentRequest);
+  //   var response_data = await response.json();
+  //   this.setState({ data: response_data});
+
+  // }
+
 
   render() {
     const {selectedDepartureStation, selectedArrivalStation} = this.state;
@@ -91,7 +119,7 @@ class App extends React.Component {
       <Row>
         <Col span={12} offset={6}>
           <br /><br /><br /><br />
-          <h1 style={{fontFamily:'proxima-nova', fontWeight:'normal', backgroundColor: "#f5f5f5"}}> {<img src="/mta.png" width="1.5%" height='1.5%'/>}Crunch </h1>
+          <h1 style={{fontFamily:'proxima-nova', fontWeight:'normal', backgroundColor: "#f5f5f5"}}> {<img src="/mta.png" alt ="mta-mini-logo" width="1.5%" height='1.5%'/>}Crunch </h1>
           <br /><br />
         </Col>
       </Row>
@@ -133,12 +161,12 @@ class App extends React.Component {
             <br /><br /><br />
         <Col span={12}>
 
-          <h3> {selectedDepartureStation && selectedDepartureStation.name}</h3>
+          <h3> {selectedDepartureStation && selectedDepartureStation.name} </h3>
           <Dropdown overlay={(
             <Menu>
               {stations.map(station => (
                 <Menu.Item key={station.name}>
-                  <a href="#" onClick={() => this.setState({selectedDepartureStation: station})}>
+                  <a href="/#" value = "set-departure" onClick={() => this.setState({selectedDepartureStation: station})}>
                     {station.name}
 
                   </a>
@@ -158,7 +186,7 @@ class App extends React.Component {
           <Menu>
             {stations.map(station => (
               <Menu.Item key={station.name}>
-                <a href="#" onClick={() => this.setState({selectedArrivalStation: station})}>
+                <a href="/#" onClick={() => this.setState({selectedArrivalStation: station})}>
                   {station.name}
                 </a>
               </Menu.Item>
@@ -175,6 +203,7 @@ class App extends React.Component {
       <Row>
         <Col span={8} offset={8}>
             <br /><br /><br />
+          // <Button type="primary" onClick={ this.state /*() =>this.commuteRequest()*/} >Get Commute Time</Button>
           <Statistic title="Expected commute time" value={45} suffix={'min'} />
             <br /><br /><br />
           <Slider defaultValue={80} min={60} max={100} />
@@ -182,7 +211,7 @@ class App extends React.Component {
       </Row>
         <br /><br /><br /><br /><br /><br />
       <Row><p className="App-intro">{this.state.data}</p></Row>
-      <img src="./bacLogo.png" width="100%" height='20%'/>
+      <img src="./bacLogo.png" alt="bottom-bac-logo" width="100%" height='20%'/>
       </div>
 
     );
