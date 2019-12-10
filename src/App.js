@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker, Checkbox} from 'antd';
+import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker, Checkbox,Radio} from 'antd';
 
 const stations = [{name: 'Van Cortlandt Park - 242 St',},
 {name: '238 St',},
@@ -50,10 +50,6 @@ const line = [{
 
 
 
-function onChange(time, timeString) {
-  console.log(time, timeString);
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -61,14 +57,23 @@ class App extends React.Component {
       selectedDepartureStation: null,
       selectedArrivalStation: null,
       selectedArrivalTime: null,
-      selectedArrivalDate:null,
+      selectedArrivalDate:"Weekend",
       selectedLine:null,
       data: null,
       
     };
     // this.commuteRequest = this.commuteRequest.bind(this)
+    // this.onTimeChange = this.onTimeChange.bind(this)
 
   }
+
+  onDateChange = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      selectedArrivalDate: e.target.value,
+    });
+  };
+
 
   // componentDidMount() {
   //     // Call our fetch function below once the component mounts
@@ -118,9 +123,9 @@ class App extends React.Component {
 
       <Row>
         <Col span={12} offset={6}>
-          <br /><br /><br /><br />
-          <h1 style={{fontFamily:'proxima-nova', fontWeight:'normal', backgroundColor: "#f5f5f5"}}> {<img src="/mta.png" alt ="mta-mini-logo" width="1.5%" height='1.5%'/>}Crunch </h1>
-          <br /><br />
+          <br />
+          <h1 style={{fontFamily:'proxima-nova', fontWeight:'normal', backgroundColor: "#f5f5f5"}}> {<img src="/mta.png" alt ="mta-mini-logo" width="3%" height='3%'/>}Crunch </h1>
+          <br />
         </Col>
       </Row>
 
@@ -149,16 +154,9 @@ class App extends React.Component {
             <Icon type="circle" /><img src="/w.png" alt="w" width="2.3%" height="2.3%" />
             <Icon type="circle" /><img src="/s.png" alt="s" width="2.8%" height="2.8%" />
           </a>
-            <br /><br /><br />
+            <br /><br/><br/><br/>
 
       <Row>
-          <h4 style={{fontColor:"#f5f5f5"}}> Arrival time </h4>
-          <TimePicker use12Hours format="h:mm a" onChange={onChange} />
-          <br />
-          <Checkbox defaultChecked> Weekday </Checkbox>
-          <br />
-          <Checkbox defaultChecked={false}> Weekend </Checkbox>
-            <br /><br /><br />
         <Col span={12}>
 
           <h3> {selectedDepartureStation && selectedDepartureStation.name} </h3>
@@ -199,17 +197,29 @@ class App extends React.Component {
         </Dropdown>
         </Col>
       </Row>
+      <br/><br/><br/>
+      <Row>
+      <h4 style={{fontColor:"#f5f5f5"}}> Arrival time  { "\ "}
+          <TimePicker use12Hours minuteStep={5} format="h:mm a" value = {this.state.selectedArrivalTime} style = {{margin:15} }/>
+
+          <Radio.Group buttonStyle="solid" onChange={this.onDateChange} value={this.state.selectedArrivalDate} >
+          <Radio value={"Weekday"}>Weekday</Radio>
+          <Radio value={"Weekend"}>Weekend</Radio>
+          </Radio.Group><Col span={1}/>
+          <Button type="primary" >Get Commute Time</Button></h4>
+            <br /><br />
+      </Row>
 
       <Row>
         <Col span={8} offset={8}>
             <br /><br /><br />
-          // <Button type="primary" onClick={ this.state /*() =>this.commuteRequest()*/} >Get Commute Time</Button>
+          
           <Statistic title="Expected commute time" value={45} suffix={'min'} />
             <br /><br /><br />
           <Slider defaultValue={80} min={60} max={100} />
         </Col>
       </Row>
-        <br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br />
       <Row><p className="App-intro">{this.state.data}</p></Row>
       <img src="./bacLogo.png" alt="bottom-bac-logo" width="100%" height='20%'/>
       </div>
