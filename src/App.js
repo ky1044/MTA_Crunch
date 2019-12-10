@@ -54,11 +54,19 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      userInput :{
+        selectedDepartureStation: null,
+        selectedDepartureStation: null,
+        selectedArrivalStation: null,
+        selectedArrivalTime: null,
+        selectedArrivalDate:"Weekday",
+        selectedLine:null,
+      },
       selectedDepartureStation: null,
       selectedArrivalStation: null,
       selectedArrivalTime: null,
       selectedArrivalDate:"Weekday",
-      selectedLine:null,
+      selectedLine:"R",
       data: null,
       request:null,
       
@@ -66,6 +74,7 @@ class App extends React.Component {
     // this.commuteRequest = this.commuteRequest.bind(this)
     // this.onTimeChange = this.onTimeChange.bind(this)
     this.userRequest = this.userRequest.bind(this);
+    this.onTrainChange = this.onTrainChange.bind(this);
 
   }
 
@@ -75,7 +84,17 @@ class App extends React.Component {
       selectedArrivalDate: e.target.value,
     });
     console.log(this.state.selectedArrivalDate);
-  };
+  }
+
+  async onTrainChange(e,nowline){
+    e.preventDefault();
+    console.log(e);
+    console.log('line changed:', nowline);
+    await this.setState({
+      selectedLine: nowline,
+    });
+    console.log(this.state.selectedLine);
+  }
 
   async userRequest(){
     await console.log(this.state.selectedArrivalDate)
@@ -132,7 +151,7 @@ class App extends React.Component {
 
 
   render() {
-    const {selectedDepartureStation, selectedArrivalStation} = this.state;
+    const {selectedDepartureStation, selectedArrivalStation,selectedLine} = this.state;
 
      //const diff = selectedDepartureStation.arrivalTime - selectedArrivalStation.arrivalTime;
 
@@ -148,34 +167,39 @@ class App extends React.Component {
         </Col>
       </Row>
 
-          <a className="ant-dropdown-link" href="App.css">
-          Select a train <Icon type="down" /><img src="/1.png" alt="1" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/2.png" alt="2" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/3.png" alt="3" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/4.png" alt="4" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/5.png" alt="5" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/6.png" alt="6" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/7.png" alt="7" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/a.png" alt="a" width="2.3%" height="2.3%" />
-            <Icon type="circle" /><img src="/c.png" alt="c" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/e.png" alt="e" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/b.png" alt="b" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/d.png" alt="d" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/f.png" alt="f" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/m.png" alt="m" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/g.png" alt="g" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/j.png" alt="j" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/z.png" alt="z" width="2.3%" height="2.3%" />
-            <Icon type="circle" /><img src="/l.png" alt="l" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/n.png" alt="n" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/q.png" alt="q" width="2.3%" height="2.3%" />
-            <Icon type="circle" /><img src="/r.png" alt="r" width="3%" height="3%" />
-            <Icon type="circle" /><img src="/w.png" alt="w" width="2.3%" height="2.3%" />
-            <Icon type="circle" /><img src="/s.png" alt="s" width="2.8%" height="2.8%" />
-          </a>
-            <br /><br/><br/><br/>
+          <h3 >
+            Commute on the {selectedLine} Train</h3><br/>
+            <img src="/1.png" alt="1" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"1")}/>
+            <Icon type="circle" /><img src="/2.png" alt="2" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"2")} />
+            <Icon type="circle" /><img src="/3.png" alt="3" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"3")}/>
+            <Icon type="circle" /><img src="/4.png" alt="4" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"4")}/>
+            <Icon type="circle" /><img src="/5.png" alt="5" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"5")}/>
+            <Icon type="circle" /><img src="/6.png" alt="6" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"6")}/>
+            <Icon type="circle" /><img src="/7.png" alt="7" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"7")}/>
+            <Icon type="circle" /><img src="/a.png" alt="a" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"A")}/>
+            <Icon type="circle" /><img src="/c.png" alt="c" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"C")}/>
+            <Icon type="circle" /><img src="/e.png" alt="e" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"E")}/>
+            <Icon type="circle" /><img src="/b.png" alt="b" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"B")}/>
+            <Icon type="circle" /><img src="/d.png" alt="d" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"D")}/>
+            <Icon type="circle" /><img src="/f.png" alt="f" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"F")}/>
+            <Icon type="circle" /><img src="/m.png" alt="m" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"M")}/>
+            <Icon type="circle" /><img src="/g.png" alt="g" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"G")}/>
+            <Icon type="circle" /><img src="/j.png" alt="j" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"J")}/>
+            <Icon type="circle" /><img src="/z.png" alt="z" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"Z")}/>
+            <Icon type="circle" /><img src="/l.png" alt="l" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"L")}/>
+            <Icon type="circle" /><img src="/n.png" alt="n" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"N")}/>
+            <Icon type="circle" /><img src="/q.png" alt="q" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"Q")}/>
+            <Icon type="circle" /><img src="/r.png" alt="r" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"R")}/>
+            <Icon type="circle" /><img src="/w.png" alt="w" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"W")}/>
+            <Icon type="circle" /><img src="/s.png" alt="s" width="2.8%" height="2.8%" onClick={(e)=>this.onTrainChange(e,"S")}/>
+
+          
+            <br />
+            
+<br/><br/>
 
       <Row>
+      
         <Col span={12}>
 
           <h3> {selectedDepartureStation && selectedDepartureStation.name} </h3>
