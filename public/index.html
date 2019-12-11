@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <br/>
     <title style ="font-weight:bold;">MTA Crunch</title>
       <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
@@ -44,22 +45,35 @@
       </div>
     </div>
     <div class="row">
-    <div class="one-half column" >
-      <p>Departure Station:
-      <input type="text" id="sStation" name="Starting Station" required
-         minlength="4" maxlength="30" size="25"/></p>
-    </div>
+      <div class="one-half column" >
+        <p>Departure Station:
+        <input type="text" id="sStation" name="Starting Station" required
+           minlength="4" maxlength="30" size="25"/></p>
+      </div>
 
-    <div class="one-half column" >
-      <p>Arrival Station:
-      <input type="text" id="eStation" name="Starting Station" required
-        minlength="4" maxlength="30" size="25" /></p>
+      <div class="one-half column" >
+        <p>Arrival Station:
+        <input type="text" id="eStation" name="Ending Station" required
+          minlength="4" maxlength="30" size="25" /></p>
+      </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="one-half column" >
+        <p>Arrival Time
+        <input type="text" id="arTime" name="Arrival Time" required
+           minlength="4" maxlength="30" size="25"/></p>
+      </div>
+
+      <div class="one-half column" >
+        <p>Date
+        <input type="text" id="arDate" name="Arrival Date" required
+          minlength="4" maxlength="30" size="25" /></p>
+      </div>
+    </div>
 
     </div>
     <br>
-    <input id="request_commute" type="button" value="get commute time" onclick= "getCommute();"/>
+    <input id="request_commute" type="button" value="get commute time" onclick= "getCommute();">
     </div>
     <h5 id ="return"> </h6>
     <br>
