@@ -65,7 +65,7 @@
     <br>
     <div class="slidecontainer">
       
-      <input oninput = "sliderTouch();" id = "confidence-slider" type="range" min="1" max="100" value="80" class="slider" id="myRange"/>
+      <input oninput = "sliderTouch();" id = "confidence-slider" type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
       <p id = "confidence-text"><p>
     </div>
     <br>
@@ -132,14 +132,8 @@
           console.log("slider changed")
           console.log(this.value)
           console.log(confidences)
-          cText.innerHTML = parseInt(this.value)+"% of historical trips took less than "+parseInt(confidences[this.value])+"minutes.";
+          cText.innerHTML = parseInt(this.value)+"% of historical trips took"+parseInt(confidences[this.value])+"minutes or less.";
       }
-
-      // function sliderTouch() {
-      //     console.log("slider changed")
-      //     console.log(this.value)
-      //     cText.innerHTML = parseInt(this.value)+"% of your trips will be shorter than "+parseInt(confidences[this.value])+"minutes";
-      // }
 
       async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime, ArrivalDate){
         const data = {TrainLine, StartStation, EndStation, ArrivalTime, ArrivalDate};
@@ -162,7 +156,11 @@
       }
 
       async function getCommute(){
+
         document.getElementById("return").innerHTML = "Calculating...";
+        cSlider.style.display ="none";
+        cText.innerHTML = "";
+
         console.log("requesting commute time");
         var startS = document.getElementById("sStation").value;
         var endS = document.getElementById("eStation").value;
@@ -177,7 +175,6 @@
         else{
           document.getElementById("return").innerHTML ="Expected Commute Time: " + commute_data.data["mean-commute"] + " mins.";
           document.getElementById("confidence-slider").style.display ="inline-block";
-          document.getElementById("confidence-slider").style.align ="center";
 
           for (i = 0;i<confidences.length;i++){
             confidences[i]=commute_data.data["confidence-commute"][i];
