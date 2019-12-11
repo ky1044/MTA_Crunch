@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -11,13 +10,13 @@ const logOutput = (name) => (message) => console.log(`[${name}] ${message}`)
 //below function taken from "https://codewithhugo.com/integrate-python-ruby-php-shell-with-node-js/" Thank you!
 function run(TrainLine, StartStation, EndStation,ArrivalTime,ArrivalDate) {
   return new Promise((resolve, reject) => {
-    var process = spawn('python3',["./python/main.py", 
+    var process = spawn('python3',["./python/main.py",
                             TrainLine,
-                            StartStation, 
+                            StartStation,
                             EndStation,
                             ArrivalTime,
                             ArrivalDate
-                            ] ); 
+                            ] );
 
     const out = []
     process.stdout.on(
@@ -56,6 +55,7 @@ function run(TrainLine, StartStation, EndStation,ArrivalTime,ArrivalDate) {
 app.post('/commuterequest',async function(request,response){
     console.log(request.body);
 
+    try {await promise2;} catch(err) {console.log(err);}
     const outputjson =await run(request.body.TrainLine,request.body.StartStation, request.body.EndStation, request.body.ArrivalTime, request.body.ArrivalDate);
 
     console.log(outputjson);

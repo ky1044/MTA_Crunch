@@ -17,15 +17,13 @@ def getname(id,stopsDict):
 
 def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 
-	colnames=['DATE', 'TRIP_ID', 'Year', 'ROUTE', 'X', 'Y', 'STOP_ID', 'TIME', 'Z'] 
+	colnames=['DATE', 'TRIP_ID', 'Year', 'ROUTE', 'X', 'Y', 'STOP_ID', 'TIME', 'Z']
 
 	all_dfs = []
 	files = [f for f in os.listdir('./data') if os.path.isfile(os.path.join('./data', f))]
 	for file in files:
 		all_dfs.append(pd.read_csv("data/"+file, names=colnames, header=None))
 	DF = pd.concat(all_dfs).reset_index(drop=True)
-
-
 
 	DF = pd.concat(all_dfs).reset_index(drop=True)
 
@@ -86,7 +84,7 @@ def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 	vals2 = [x / 60 for x in vals]
 	med2 = int(round(statistics.median(vals2),0))
 
-	
+
 	for i in range (len(percentile_arr)):
 		percentile_arr[i]=int(round(np.percentile(vals2, i),0))
 

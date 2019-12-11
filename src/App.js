@@ -30,6 +30,13 @@ const table = {"1":["Van Cortlandt Park - 242 St", "238 St", "231 St", "Marble H
 'W':['Not Available Yet'],
 'Z':['Not Available Yet']}
 
+const [commuterData, setCommuterData] = useState({});
+
+useEffect(() => {
+  yourFavoriteHttpClient.post('/commuterequest')
+    .then(response => setCommuterData(response.data));
+}, [setCommuterData]);
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -151,7 +158,7 @@ class App extends React.Component {
         10,
         10,
         10,
-        10] 
+        10]
       }
     };
     // this.commuteRequest = this.commuteRequest.bind(this)
@@ -175,7 +182,7 @@ class App extends React.Component {
     console.log('line changed:', nowline);
     await this.setState({
       selectedLine: nowline,
-      selectedDepartureStation:null, 
+      selectedDepartureStation:null,
       selectedArrivalDate: null,
 
     });
@@ -186,12 +193,12 @@ class App extends React.Component {
     await requestCommute(line, sStation, eStation, aTime,aDate).then(response_data =>{
       this.setState({data:response_data});
     }
-      
+
+
     )
     console.log(this.state.data)
 
   }
-
 
   // componentDidMount() {
   //     // Call our fetch function below once the component mounts
@@ -205,7 +212,7 @@ class App extends React.Component {
   //   const body = await response.json();
 
   //   if (response.status !== 200) {
-  //     throw Error(body.message) 
+  //     throw Error(body.message)
   //   }
   //   return body;
   // };
@@ -220,15 +227,13 @@ class App extends React.Component {
   //           },
   //           body: JSON.stringify(this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate)
   //           // body:JSON.stringify({"hello":"world"})
-            
+
   //         }
 
   //   var response = await fetch('/commuterequest',currentRequest);
   //   var response_data = await response.json();
   //   this.setState({ data: response_data});
-
   // }
-
 
   render() {
     const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime} = this.state;
@@ -272,16 +277,10 @@ class App extends React.Component {
             <Icon type="circle" /><img src="/r.png" alt="r" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"R")}/>
             <Icon type="circle" /><img src="/w.png" alt="w" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"W")}/>
             <Icon type="circle" /><img src="/s.png" alt="s" width="2.8%" height="2.8%" onClick={(e)=>this.onTrainChange(e,"S")}/>
-
-          
-            <br />
-            
-<br/><br/>
+            <br /><br/><br/>
 
       <Row>
-      
         <Col span={12}>
-
           <h3> {selectedDepartureStation} </h3>
           <Dropdown overlay={(
             <Menu>
@@ -320,7 +319,7 @@ class App extends React.Component {
       </Row>
       <br/><br/><br/>
       <Row>
-      <h4 style={{fontColor:"#f5f5f5"}}> Arrival time 
+      <h4 style={{fontColor:"#f5f5f5"}}> Arrival time
           <TimePicker use12Hours minuteStep={5} format="h:mm a" style = {{margin:15} }/>
 
           <Radio.Group buttonStyle="solid" onChange={this.onDateChange} value={this.state.selectedArrivalDate} >
@@ -334,20 +333,17 @@ class App extends React.Component {
       <Row>
         <Col span={8} offset={8}>
             <br /><br /><br />
-          
           <Statistic title="Expected commute time" value={45} suffix={'min'} />
             <br /><br /><br />
           <Slider defaultValue={80} min={60} max={100} />
         </Col>
       </Row>
-        <br /><br /><br /><br />
+          <br /><br /><br /><br />
       <Row><p className="App-intro">{this.state.data}</p></Row>
       <img src="./bacLogo.png" alt="bottom-bac-logo" width="100%" height='20%'/>
       </div>
-
     );
   }
 }
-
 
 export default App;
