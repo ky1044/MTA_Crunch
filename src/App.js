@@ -30,16 +30,6 @@ const table = {"1":["Van Cortlandt Park - 242 St", "238 St", "231 St", "Marble H
 'W':['Not Available Yet'],
 'Z':['Not Available Yet']}
 
-const line = [{
-  line: 'R',
-}, {
-  line: '1',
-}, {
-  line: 'A',
-}];
-
-
-
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -222,7 +212,6 @@ class App extends React.Component {
               Arrival Station<Icon type="down" />
             </a>
           </Dropdown>
-        
         </Col>
       </Row>
       <br/><br/><br/>
@@ -234,7 +223,7 @@ class App extends React.Component {
           <Radio value={"Weekday"}>Weekday</Radio>
           <Radio value={"Weekend"}>Weekend</Radio>
           </Radio.Group><Col span={1}/>
-          <Button type="primary" onClick = {this.userRequest}>Get Commute Time</Button></h4>
+          <Button type="primary" onClick = {this.userRequest(selectedLine,selectedArrivalStation,selectedDepartureStation,selectedArrivalTime,selectedArrivalDate)}>Get Commute Time</Button></h4>
             <br /><br />
       </Row>
 
