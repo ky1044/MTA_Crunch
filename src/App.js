@@ -1,45 +1,8 @@
 import React from 'react';
 import './App.css';
 import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker,Radio} from 'antd';
-import { commuteRequest } from './Api';
+import {requestCommute} from './Api';
 
-const stations = [{name: 'Van Cortlandt Park - 242 St',},
-{name: '238 St',},
-{name: '231 St',},
-{name: 'Marble Hill - 225 St',},
-{name: '215 St',},
-{name: '207 St',},
-{name: 'Dyckman St',},
-{name: '191 St',},
-{name: '181 St',},
-{name: '168 St - Washington Hts',},
-{name: '157 St',},
-{name: '145 St',},
-{name: '137 St - City College',},
-{name: '125 St',},
-{name: '116 St - Columbia University',},
-{name: 'Cathedral Pkwy (110 St)',},
-{name: '103 St',},
-{name: '96 St',},
-{name: '86 St',},
-{name: '79 St',},
-{name: '72 St',},
-{name: '66 St - Lincoln Center',},
-{name: '59 St - Columbus Circle',},
-{name: '50 St',},
-{name: 'Times Sq - 42 St',},
-{name: '34 St - Penn Station',},
-{name: '23 St',},
-{name: '18 St',},
-{name: '14 St',},
-{name: 'Christopher St - Sheridan Sq',},
-{name: 'Houston St',},
-{name: 'Canal St',},
-{name: 'Franklin St',},
-{name: 'Chambers St',},
-{name: 'WTC Cortlandt',},
-{name: 'Rector St',},
-{name: 'South Ferry',}];
 
 const table = {"1":["Van Cortlandt Park - 242 St", "238 St", "231 St", "Marble Hill - 225 St", "215 St", "207 St", "Dyckman St", "191 St", "181 St", "168 St - Washington Hts", "157 St", "145 St", "137 St - City College", "125 St", "116 St - Columbia University", "Cathedral Pkwy (110 St)", "103 St", "96 St", "86 St", '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Sq - 42 St', '34 St - Penn Station', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Sq', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'WTC Cortlandt', 'Rector St', 'South Ferry'],
 "2":['Wakefield - 241 St', 'Nereid Av', '233 St', '225 St', '219 St', 'Gun Hill Rd', 'Burke Av', 'Allerton Av', 'Pelham Pkwy', 'Bronx Park East', 'E 180 St', 'West Farms Sq - E Tremont Av', '174 St', 'Freeman St', 'Simpson St', 'Intervale Av', 'Prospect Av', '3 Av - 149 St', '149 St - Grand Concourse', '135 St', '125 St', '116 St', 'Central Park North (110 St)', '96 St', '86 St', '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Sq - 42 St', '34 St - Penn Station', '28 St', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Sq', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'Park Pl', 'Fulton St', 'Wall St', 'Clark St', 'Borough Hall', 'Hoyt St', 'Nevins St', 'Atlantic Av', 'Bergen St', 'Grand Army Plaza', 'Eastern Pkwy - Brooklyn Museum', 'Franklin Av', 'President St', 'Sterling St', 'Winthrop St', 'Church Av', 'Beverly Rd', 'Newkirk Av', 'Flatbush Av - Brooklyn College'],
@@ -83,7 +46,6 @@ class App extends React.Component {
     this.state = {
       userInput :{
         selectedDepartureStation: null,
-        selectedDepartureStation: null,
         selectedArrivalStation: null,
         selectedArrivalTime: null,
         selectedArrivalDate:"Weekday",
@@ -91,7 +53,7 @@ class App extends React.Component {
       },
       selectedDepartureStation: null,
       selectedArrivalStation: null,
-      selectedArrivalTime: null,
+      selectedArrivalTime: "0900",
       selectedArrivalDate:"Weekday",
       selectedLine:"1",
       data: null,
@@ -119,23 +81,20 @@ class App extends React.Component {
     console.log('line changed:', nowline);
     await this.setState({
       selectedLine: nowline,
+      selectedDepartureStation:null, 
+      selectedArrivalDate: null,
+
     });
     console.log(this.state.selectedLine);
   }
 
-  async userRequest(){
-    await console.log(this.state.selectedArrivalDate)
-    this.setState({
-      request :{
-                  method: 'POST',
-                  headers:{
-                    'Content-Type':'application/json'
-                  },
-                  body: JSON.stringify(this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate)
-                  
-                }
-    })
-    console.log(this.state.request)
+  async userRequest(line, sStation, eStation, aTime,aDate){
+    await requestCommute(line, sStation, eStation, aTime,aDate).then(response_data =>{
+      this.setState({data:response_data});
+    }
+      
+    )
+    console.log(this.state.data)
 
   }
 
@@ -178,7 +137,7 @@ class App extends React.Component {
 
 
   render() {
-    const {selectedDepartureStation, selectedArrivalStation,selectedLine} = this.state;
+    const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime} = this.state;
 
      //const diff = selectedDepartureStation.arrivalTime - selectedArrivalStation.arrivalTime;
 
@@ -229,14 +188,13 @@ class App extends React.Component {
       
         <Col span={12}>
 
-          <h3> {selectedDepartureStation && selectedDepartureStation.name} </h3>
+          <h3> {selectedDepartureStation} </h3>
           <Dropdown overlay={(
             <Menu>
                {table[selectedLine].map(station => (
                  <Menu.Item key={station}>
                    <a href="/#" value = "set-departure" onClick={() => this.setState({selectedDepartureStation: station})}>
                      {station}
-
                    </a>
                  </Menu.Item>
                ))}
@@ -248,30 +206,29 @@ class App extends React.Component {
           </Dropdown>
         </Col>
         <Col span={12}>
-        <h3> {selectedArrivalStation && selectedArrivalStation.name}</h3>
-
-        <Dropdown overlay={(
-          <Menu>
-          {table[selectedLine].map(station => (
-            <Menu.Item key={station}>
-              <a href="/#" value = "set-departure" onClick={() => this.setState({selectedDepartureStation: station})}>
-                {station}
-
-              </a>
-            </Menu.Item>
-          ))}
-        </Menu>
-        )}>
-          <a className="ant-dropdown-link" href="App.css">
-            Arrival Station<Icon type="down" />
-          </a>
-        </Dropdown>
+        <h3> {selectedArrivalStation} </h3>
+          <Dropdown overlay={(
+            <Menu>
+               {table[selectedLine].map(station => (
+                 <Menu.Item key={station}>
+                   <a href="/#" value = "set-arrival" onClick={() => this.setState({selectedArrivalStation: station})}>
+                     {station}
+                   </a>
+                 </Menu.Item>
+               ))}
+             </Menu>
+           )}>
+            <a className="ant-dropdown-link" href="App.css">
+              Arrival Station<Icon type="down" />
+            </a>
+          </Dropdown>
+        
         </Col>
       </Row>
       <br/><br/><br/>
       <Row>
-      <h4 style={{fontColor:"#f5f5f5"}}> Arrival time  { "\ "}
-          <TimePicker use12Hours minuteStep={5} format="h:mm a" value = {this.state.selectedArrivalTime} style = {{margin:15} }/>
+      <h4 style={{fontColor:"#f5f5f5"}}> Arrival time 
+          <TimePicker use12Hours minuteStep={5} format="h:mm a" style = {{margin:15} }/>
 
           <Radio.Group buttonStyle="solid" onChange={this.onDateChange} value={this.state.selectedArrivalDate} >
           <Radio value={"Weekday"}>Weekday</Radio>
