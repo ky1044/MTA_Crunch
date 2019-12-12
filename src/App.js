@@ -327,7 +327,7 @@ class App extends React.Component {
           <Radio value={"Weekday"}>Weekday</Radio>
           <Radio value={"Weekend"}>Weekend</Radio>
           </Radio.Group><Col span={1}/>
-          <Button type="primary" onClick = {this.userRequest(selectedLine,selectedArrivalStation,selectedDepartureStation,selectedArrivalTime,selectedArrivalDate)}>Get Commute Time</Button></h4>
+          <Button type="primary" onClick = {()=>this.userRequest(selectedLine,selectedArrivalStation,selectedDepartureStation,selectedArrivalTime,selectedArrivalDate)}>Get Commute Time</Button></h4>
             <br /><br />
       </Row>
 
