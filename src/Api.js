@@ -14,6 +14,7 @@ async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime, 
         const response = await fetch('/commuterequest',requestFull);
         console.log(response);
         const response_data = await response.json();
+        console.log(response_data);
         return response_data;
       }
 export { requestCommute };

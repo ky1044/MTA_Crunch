@@ -34,13 +34,6 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userInput :{
-        selectedDepartureStation: null,
-        selectedArrivalStation: null,
-        selectedArrivalTime: null,
-        selectedArrivalDate:"Weekday",
-        selectedLine:null,
-      },
       selectedDepartureStation: null,
       selectedArrivalStation: null,
       selectedArrivalTime: "0900",
@@ -48,110 +41,12 @@ class App extends React.Component {
       selectedLine:"1",
       data: null,
       request:null,
-      sampleData :{ status: 'success',
-     "mean-commute": 7,
-     "confidence-commute":
-      [ 5,
-        5,
-        5,
-        5,
-        5,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        6,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        7,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        9,
-        9,
-        9,
-        9,
-        9,
-        9,
-        9,
-        9,
-        9,
-        9,
-        9,
-        10,
-        10,
-        10,
-        10] 
+      analysisTime:null,
+      showResponse:false,
+      responseData :{ 
+      "status": null,
+      "mean-commute": null,
+      "confidence-commute":null 
       }
     };
     // this.commuteRequest = this.commuteRequest.bind(this)
@@ -184,54 +79,17 @@ class App extends React.Component {
 
   async userRequest(line, sStation, eStation, aTime,aDate){
     await requestCommute(line, sStation, eStation, aTime,aDate).then(response_data =>{
-      this.setState({data:response_data});
+      this.setState({analysisTime:response_data.data["mean-commute"]});
     }
       
     )
-    console.log(this.state.data)
+    console.log(this.state.analysisTime)
 
   }
 
 
-  // componentDidMount() {
-  //     // Call our fetch function below once the component mounts
-  //   this.callBackendAPI()
-  //     .then(res => this.setState({ data: res.express }))
-  //     .catch(err => console.log(err));
-  // }
-
-  // callBackendAPI = async () => {
-  //   const response = await fetch('/express_backend');
-  //   const body = await response.json();
-
-  //   if (response.status !== 200) {
-  //     throw Error(body.message) 
-  //   }
-  //   return body;
-  // };
-
-  // async commuteRequest() {
-  //   this.setState({ data: "requested"});
-  //   // var request_args = {this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate}
-  //   var currentRequest = {
-  //           method: 'POST',
-  //           headers:{
-  //             'Content-Type':'application/json'
-  //           },
-  //           body: JSON.stringify(this.state.selectedLine,this.state.selectedDepartureStation,this.state.selectedDepartureStation,this.state.selectedArrivalTime,this.state.selectedArrivalDate)
-  //           // body:JSON.stringify({"hello":"world"})
-            
-  //         }
-
-  //   var response = await fetch('/commuterequest',currentRequest);
-  //   var response_data = await response.json();
-  //   this.setState({ data: response_data});
-
-  // }
-
-
   render() {
-    const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime} = this.state;
+    const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime,analysisTime} = this.state;
 
      //const diff = selectedDepartureStation.arrivalTime - selectedArrivalStation.arrivalTime;
 
@@ -335,7 +193,7 @@ class App extends React.Component {
         <Col span={8} offset={8}>
             <br /><br /><br />
           
-          <Statistic title="Expected commute time" value={45} suffix={'min'} />
+          <Statistic title="Expected commute time" value={analysisTime} suffix={'min'} />
             <br /><br /><br />
           <Slider defaultValue={80} min={60} max={100} />
         </Col>
