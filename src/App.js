@@ -34,8 +34,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedDepartureStation: null,
-      selectedArrivalStation: null,
+      selectedDepartureStation: table["1"][0],
+      selectedArrivalStation: table["1"][table["1"].length-1],
       selectedArrivalTime: "0900",
       selectedArrivalDate:"Weekday",
       selectedLine:"1",
@@ -49,8 +49,6 @@ class App extends React.Component {
       "confidence-commute":null 
       }
     };
-    // this.commuteRequest = this.commuteRequest.bind(this)
-    // this.onTimeChange = this.onTimeChange.bind(this)
     this.userRequest = this.userRequest.bind(this);
     this.onTrainChange = this.onTrainChange.bind(this);
 
@@ -61,7 +59,6 @@ class App extends React.Component {
     this.setState({
       selectedArrivalDate: e.target.value,
     });
-    console.log(this.state.selectedArrivalDate);
   }
 
   async onTrainChange(e,nowline){
@@ -70,10 +67,12 @@ class App extends React.Component {
     console.log('line changed:', nowline);
     await this.setState({
       selectedLine: nowline,
-      selectedDepartureStation:null, 
-      selectedArrivalDate: null,
-
     });
+    await this.setState({
+      selectedDepartureStation: table[this.state.selectedLine][0], 
+      selectedArrivalStation:table[this.state.selectedLine][table[this.state.selectedLine].length-1], 
+    });
+
     console.log(this.state.selectedLine);
   }
 
@@ -132,9 +131,7 @@ class App extends React.Component {
             <Icon type="circle" /><img src="/s.png" alt="s" width="2.8%" height="2.8%" onClick={(e)=>this.onTrainChange(e,"S")}/>
 
           
-            <br />
-            
-<br/><br/>
+            <br/><br/><br/>
 
       <Row>
       
@@ -162,7 +159,7 @@ class App extends React.Component {
           <Dropdown overlay={(
             <Menu>
                {table[selectedLine].map(station => (
-                 <Menu.Item key={station}>
+                 <Menu.Item key={station+"2"}>
                    <a href="/#" value = "set-arrival" onClick={() => this.setState({selectedArrivalStation: station})}>
                      {station}
                    </a>
@@ -176,7 +173,7 @@ class App extends React.Component {
           </Dropdown>
         </Col>
       </Row>
-      <br/><br/><br/>
+      <br/><br/>
       <Row>
       <h4 style={{fontColor:"#f5f5f5"}}> Arrival time 
           <TimePicker use12Hours minuteStep={5} format="h:mm a" style = {{margin:15} }/>
@@ -189,13 +186,13 @@ class App extends React.Component {
             <br /><br />
       </Row>
 
-      <Row>
+      <Row >
         <Col span={8} offset={8}>
             <br /><br /><br />
           
           <Statistic title="Expected commute time" value={analysisTime} suffix={'min'} />
             <br /><br /><br />
-          <Slider defaultValue={80} min={60} max={100} />
+          <Slider defaultValue={50} min={1} max={100} />
         </Col>
       </Row>
         <br /><br /><br /><br />
