@@ -35,7 +35,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       selectedDepartureStation: table["1"][0],
-      selectedArrivalStation: table["1"][table["1"].length-1],
+      selectedArrivalStation: table["1"][table["1"].length-2],
       selectedArrivalTime: "0900",
       selectedArrivalDate:"Weekday",
       selectedLine:"1",
@@ -70,7 +70,7 @@ class App extends React.Component {
     });
     await this.setState({
       selectedDepartureStation: table[this.state.selectedLine][0], 
-      selectedArrivalStation:table[this.state.selectedLine][table[this.state.selectedLine].length-1], 
+      selectedArrivalStation:table[this.state.selectedLine][table[this.state.selectedLine].length-2], 
     });
 
     console.log(this.state.selectedLine);
@@ -113,7 +113,7 @@ class App extends React.Component {
             <Icon type="circle" /><img src="/5.png" alt="5" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"5")}/>
             <Icon type="circle" /><img src="/6.png" alt="6" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"6")}/>
             <Icon type="circle" /><img src="/7.png" alt="7" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"7")}/>
-            <Icon type="circle" /><img src="/a.png" alt="a" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"A")}/>
+            <Icon type="circle" /><img src="/a.png" alt="a" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"A")}/>
             <Icon type="circle" /><img src="/c.png" alt="c" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"C")}/>
             <Icon type="circle" /><img src="/e.png" alt="e" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"E")}/>
             <Icon type="circle" /><img src="/b.png" alt="b" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"B")}/>
@@ -122,13 +122,13 @@ class App extends React.Component {
             <Icon type="circle" /><img src="/m.png" alt="m" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"M")}/>
             <Icon type="circle" /><img src="/g.png" alt="g" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"G")}/>
             <Icon type="circle" /><img src="/j.png" alt="j" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"J")}/>
-            <Icon type="circle" /><img src="/z.png" alt="z" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"Z")}/>
+            <Icon type="circle" /><img src="/z.png" alt="z" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"Z")}/>
             <Icon type="circle" /><img src="/l.png" alt="l" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"L")}/>
             <Icon type="circle" /><img src="/n.png" alt="n" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"N")}/>
-            <Icon type="circle" /><img src="/q.png" alt="q" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"Q")}/>
+            <Icon type="circle" /><img src="/q.png" alt="q" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"Q")}/>
             <Icon type="circle" /><img src="/r.png" alt="r" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"R")}/>
-            <Icon type="circle" /><img src="/w.png" alt="w" width="2.3%" height="2.3%" onClick={(e)=>this.onTrainChange(e,"W")}/>
-            <Icon type="circle" /><img src="/s.png" alt="s" width="2.8%" height="2.8%" onClick={(e)=>this.onTrainChange(e,"S")}/>
+            <Icon type="circle" /><img src="/w.png" alt="w" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"W")}/>
+            <Icon type="circle" /><img src="/s.png" alt="s" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"S")}/>
 
           
             <br/><br/><br/>
