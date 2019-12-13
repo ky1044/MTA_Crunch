@@ -20,6 +20,34 @@
   color: "#0000ff";
 }
 
+.body {
+  background-color: "#0000ff";
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: "#0000ff";
+}
+
 .App-link {
   color: #09d3ac;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.h1,h2,h3,h4, h5, button, Button{
+  color:"#777777";
+  font-weight:'thin'
+}
+
+.div {
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 0px;
+  padding-left: 80px;
 }
