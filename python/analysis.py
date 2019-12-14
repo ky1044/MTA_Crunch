@@ -38,7 +38,10 @@ def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 	Route = TrainLine
 	Arrival_Station = EndStation
 	Departure_Station = StartStation
-	Week = ("1")
+	if ArrivalDate =="Weekday":
+		Week = ("1")
+	else:
+		Week = ("1")
 	Time = ArrivalTime[:2]+":"+ArrivalTime[2:]
 
 	Time = Time[:2]
@@ -62,11 +65,13 @@ def analyze(TrainLine,StartStation,EndStation,ArrivalTime,ArrivalDate):
 	weekdays = ('2019-12-04', '2019-12-05', '2019-12-06')
 	DF.loc[DF['DAY'].isin(weekends), 'DATE'] = '0'
 	DF.loc[DF['DAY'].isin(weekdays), 'DATE'] = '1'
-
-	DF1 = DF.query('DATE == @Week and ROUTE == @Route and STOP_NAME == @Arrival_Station and HOURS == @Time')
-
-	DF2 = DF.query('DATE == @Week and ROUTE == @Route and STOP_NAME == @Departure_Station')
-
+	if Route == "7" or Route== "6":
+		Route2 = Route+"X"
+		DF1 = DF.query('DATE == @Week and (ROUTE == @Route or ROUTE ==@Route2) and STOP_NAME == @Arrival_Station and HOURS == @Time')
+		DF2 = DF.query('DATE == @Week and (ROUTE == @Route or ROUTE ==@Route2) and STOP_NAME == @Departure_Station')
+	else:
+		DF1 = DF.query('DATE == @Week and ROUTE == @Route and STOP_NAME == @Arrival_Station and HOURS == @Time')
+		DF2 = DF.query('DATE == @Week and ROUTE == @Route and STOP_NAME == @Departure_Station')
 	Final_Df = DF1.merge(DF2, on='TRIP_ID')
 
 	vals = Final_Df.TIME_x.sub(Final_Df.TIME_y).abs().values.tolist()

@@ -1,5 +1,4 @@
 async function requestCommute(TrainLine, StartStation, EndStation, ArrivalTime, ArrivalDate){
-        console.log(TrainLine);
         const data = {TrainLine, StartStation, EndStation, ArrivalTime, ArrivalDate};
         const requestFull = {
             method: 'POST',

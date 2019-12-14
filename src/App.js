@@ -573,21 +573,29 @@ class App extends React.Component {
     this.state = {
       selectedDepartureStation: table["1"][0],
       selectedArrivalStation: table["1"][table["1"].length-2],
-      selectedArrivalTime: "0900",
+      selectedArrivalTime: null,
       selectedArrivalDate:"Weekday",
       selectedLine:"1",
       data: null,
       request:null,
-      analysisTime:null,
+      analysisTime:"0900",
       showResponse:false,
+      displayResults:"none",
+      displayConfidence:"none",
+      displayError:"none",
+      confidenceTime:null,
+      confidenceValue:null,
       responseData :{
       "status": null,
       "mean-commute": null,
       "confidence-commute":null
+    
       }
     };
     this.userRequest = this.userRequest.bind(this);
     this.onTrainChange = this.onTrainChange.bind(this);
+    this.onSliderChange = this.onSliderChange.bind(this);
+    this.onTimeChange = this.onTimeChange.bind(this);
 
   }
 
@@ -613,19 +621,51 @@ class App extends React.Component {
     console.log(this.state.selectedLine);
   }
 
+  onSliderChange(newConfidence){
+    this.setState({confidenceTime:this.state.responseData["confidence-commute"][newConfidence]});
+    this.setState({displayConfidence:"block"});
+    this.setState({confidenceValue:newConfidence});
+
+  }
+
+  async onTimeChange(value){
+    const timeString = value["_i"][0]+value["_i"][1]+value["_i"][3]+value["_i"][4]
+    console.log(timeString);
+    await this.setState({selectedArrivalTime:timeString});
+    console.log(this.state.selectedArrivalTime);
+    
+
+  }
+
   async userRequest(line, sStation, eStation, aTime,aDate){
+    this.setState({analysisTime:null});
+    this.setState({responseData:null});
+    this.setState({displayResults:"none"});
+    this.setState({displayError:"none"});
+    this.setState({displayConfidence:"none"});
+    this.setState({confidenceTime:null});
+    this.setState({confidenceValue:50});
     await requestCommute(line, sStation, eStation, aTime,aDate).then(response_data =>{
-      this.setState({analysisTime:response_data.data["mean-commute"]});
+      if (response_data.data["status"]==="success"){
+        this.setState({analysisTime:response_data.data["mean-commute"]});
+        this.setState({responseData:response_data.data});
+        this.setState({displayResults:"block"});
+      }
+      else{
+        this.setState({displayError:"block"});
+      }
+      
     }
 
     )
     console.log(this.state.analysisTime)
+    console.log(this.state.responseData)
 
   }
 
 
   render() {
-    const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime,analysisTime} = this.state;
+    const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime,analysisTime,displayResults,confidenceTime,displayConfidence,confidenceValue,displayError} = this.state;
 
      //const diff = selectedDepartureStation.arrivalTime - selectedArrivalStation.arrivalTime;
 
@@ -641,7 +681,7 @@ class App extends React.Component {
         </Col>
       </Row>
 
-          <h3 style={{fontWeight:'thin', backgroundColor: "#eeeeee", color:"#777777"}}>
+          <h3 style={{fontWeight:'thin', color:"#77777"}}>
             Commute on the {selectedLine} Train</h3><br/>
             <img src="/1.png" alt="1" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"1")}/>
             <Icon type="circle" /><img src="/2.png" alt="2" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"2")} />
@@ -692,7 +732,7 @@ class App extends React.Component {
           <Dropdown overlay={(
             <Menu>
                {table[selectedLine].map(station => (
-                 <Menu.Item key={station+"2"}>
+                 <Menu.Item key={station+"-Arriving"}>
                    <a href="/#" value = "set-arrival" onClick={() => this.setState({selectedArrivalStation: station})}>
                      {station}
                    </a>
@@ -709,28 +749,34 @@ class App extends React.Component {
       <br/>
       <Row>
       <h4 style={{fontColor:"#f5f5f5"}}> Arrival time
-          <TimePicker use12Hours minuteStep={5} format="h:mm a" style = {{margin:15} }/>
+          <TimePicker use12Hours minuteStep={5} format="h:mm a" style = {{margin:15} } onChange={this.onTimeChange}/>
           <Radio.Group buttonStyle="solid" onChange={this.onDateChange} value={this.state.selectedArrivalDate} >
           <Radio value={"Weekday"}>Weekday</Radio>
           <Radio value={"Weekend"}>Weekend</Radio>
           </Radio.Group><Col span={1}/>
-          <Button type="primary" onClick = {()=>this.userRequest(selectedLine,selectedArrivalStation,selectedDepartureStation,selectedArrivalTime,selectedArrivalDate)}>Get Commute Time</Button></h4>
+          <Button type="primary" onClick = {()=>this.userRequest(selectedLine,selectedDepartureStation,selectedArrivalStation,selectedArrivalTime,selectedArrivalDate)}>Get Commute Time</Button></h4>
             <br />
       </Row>
 
       <Row>
         <Col span={8} offset={8}>
             <br />
-          <Statistic title="Expected commute time" value={analysisTime} suffix={'min'} />
-            <br /><br />
-          <Slider defaultValue={50} min={1} max={100} />
+          <h3 style = {{display:displayError} } >Our mistake: we couldn't perform analysis with the selected inputs</h3>
+          <Statistic style = {{display:displayResults} } title="Expected commute time" value={analysisTime} suffix={'min'} />
+          <br /><br />
+          
+          
+          <Slider style = {{display:displayResults} } defaultValue={50} min={1} max={100} onChange={this.onSliderChange}/>
+          <br />
+          <Statistic style = {{display:displayConfidence} } title={confidenceValue+"% of the historical commutes were"} value={confidenceTime} suffix={'mins or shorter'} />
             <br /><br /><br />
-          <div class="footer">
+          <div className="footer">
             <img src="./bacLogo.png" alt="bottom-bac-logo" width="100%" height='20%'/>
           </div>
         </Col>
       </Row>
-//</div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
     );
   }
 }
