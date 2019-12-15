@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker,Radio} from 'antd';
 import {requestCommute} from './Api';
+import {Dropdown, Menu, Icon, Slider, Row, Col, Statistic, Button, TimePicker,Radio} from 'antd';
 
 
 const table = {"1":["Van Cortlandt Park - 242 St", "238 St", "231 St", "Marble Hill - 225 St", "215 St", "207 St", "Dyckman St", "191 St", "181 St", "168 St - Washington Hts", "157 St", "145 St", "137 St - City College", "125 St", "116 St - Columbia University", "Cathedral Pkwy (110 St)", "103 St", "96 St", "86 St", '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Sq - 42 St', '34 St - Penn Station', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Sq', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'WTC Cortlandt', 'Rector St', 'South Ferry'],"2":['Wakefield - 241 St', 'Nereid Av', '233 St', '225 St', '219 St', 'Gun Hill Rd', 'Burke Av', 'Allerton Av', 'Pelham Pkwy', 'Bronx Park East', 'E 180 St', 'West Farms Sq - E Tremont Av', '174 St', 'Freeman St', 'Simpson St', 'Intervale Av', 'Prospect Av', '3 Av - 149 St', '149 St - Grand Concourse', '135 St', '125 St', '116 St', 'Central Park North (110 St)', '96 St', '86 St', '79 St', '72 St', '66 St - Lincoln Center', '59 St - Columbus Circle', '50 St', 'Times Sq - 42 St', '34 St - Penn Station', '28 St', '23 St', '18 St', '14 St', 'Christopher St - Sheridan Sq', 'Houston St', 'Canal St', 'Franklin St', 'Chambers St', 'Park Pl', 'Fulton St', 'Wall St', 'Clark St', 'Borough Hall', 'Hoyt St', 'Nevins St', 'Atlantic Av', 'Bergen St', 'Grand Army Plaza', 'Eastern Pkwy - Brooklyn Museum', 'Franklin Av', 'President St', 'Sterling St', 'Winthrop St', 'Church Av', 'Beverly Rd', 'Newkirk Av', 'Flatbush Av - Brooklyn College'], 
@@ -61,13 +61,6 @@ class App extends React.Component {
     document.body.style = 'background: #f5f5f5;';
   }
 
-  onDateChange = e => {
-    console.log('radio checked', e.target.value);
-    this.setState({
-      selectedArrivalDate: e.target.value,
-    });
-  }
-
   async onTrainChange(e,nowline){
     e.preventDefault();
     console.log('train changed:', nowline);
@@ -81,20 +74,18 @@ class App extends React.Component {
 
   }
 
-  onSliderChange(newConfidence){
-    this.setState({confidenceTime:this.state.responseData["confidence-commute"][newConfidence]});
-    this.setState({displayConfidence:"block"});
-    this.setState({confidenceValue:newConfidence});
-
-  }
-
   async onTimeChange(value){
     const timeString = value["_i"][0]+value["_i"][1]+value["_i"][3]+value["_i"][4]
-    console.log(timeString);
     await this.setState({selectedArrivalTime:timeString});
-    console.log(this.state.selectedArrivalTime);
-    
+    console.log("arrival time changed: ",this.state.selectedArrivalTime);
+  }
 
+  onDateChange = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      selectedArrivalDate: e.target.value,
+    });
+    console.log("date changed: ",this.state.selectedArrivalDate);
   }
 
   async userRequest(line, sStation, eStation, aTime,aDate){
@@ -113,12 +104,15 @@ class App extends React.Component {
       }
       else{
         this.setState({displayError:"block"});
-      }
-      
-    }
-    )
-    console.log(this.state.analysisTime)
-    console.log(this.state.responseData)
+      }  
+    });
+    console.log(this.state.responseData);
+  }
+
+  onSliderChange(newConfidence){
+    this.setState({confidenceTime:this.state.responseData["confidence-commute"][newConfidence]});
+    this.setState({displayConfidence:"block"});
+    this.setState({confidenceValue:newConfidence});
   }
 
   render() {
@@ -138,28 +132,28 @@ class App extends React.Component {
           <h3 style={{fontWeight:'thin', color:"#77777"}}>
             Commute on the {selectedLine} Train</h3><br/>
             <img src="/1.png" alt="1" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"1")}/>
-            <Icon type="circle" /><img src="/2.png" alt="2" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"2")} />
-            <Icon type="circle" /><img src="/3.png" alt="3" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"3")}/>
-            <Icon type="circle" /><img src="/4.png" alt="4" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"4")}/>
-            <Icon type="circle" /><img src="/5.png" alt="5" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"5")}/>
-            <Icon type="circle" /><img src="/6.png" alt="6" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"6")}/>
-            <Icon type="circle" /><img src="/7.png" alt="7" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"7")}/>
-            <Icon type="circle" /><img src="/a.png" alt="a" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"A")}/>
-            <Icon type="circle" /><img src="/c.png" alt="c" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"C")}/>
-            <Icon type="circle" /><img src="/e.png" alt="e" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"E")}/>
-            <Icon type="circle" /><img src="/b.png" alt="b" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"B")}/>
-            <Icon type="circle" /><img src="/d.png" alt="d" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"D")}/>
-            <Icon type="circle" /><img src="/f.png" alt="f" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"F")}/>
-            <Icon type="circle" /><img src="/m.png" alt="m" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"M")}/>
-            <Icon type="circle" /><img src="/g.png" alt="g" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"G")}/>
-            <Icon type="circle" /><img src="/j.png" alt="j" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"J")}/>
-            <Icon type="circle" /><img src="/z.png" alt="z" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"Z")}/>
-            <Icon type="circle" /><img src="/l.png" alt="l" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"L")}/>
-            <Icon type="circle" /><img src="/n.png" alt="n" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"N")}/>
-            <Icon type="circle" /><img src="/q.png" alt="q" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"Q")}/>
-            <Icon type="circle" /><img src="/r.png" alt="r" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"R")}/>
-            <Icon type="circle" /><img src="/w.png" alt="w" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"W")}/>
-            <Icon type="circle" /><img src="/s.png" alt="s" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"S")}/>
+            <img src="/2.png" alt="2" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"2")} />
+            <img src="/3.png" alt="3" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"3")}/>
+            <img src="/4.png" alt="4" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"4")}/>
+            <img src="/5.png" alt="5" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"5")}/>
+            <img src="/6.png" alt="6" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"6")}/>
+            <img src="/7.png" alt="7" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"7")}/>
+            <img src="/a.png" alt="a" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"A")}/>
+            <img src="/c.png" alt="c" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"C")}/>
+            <img src="/e.png" alt="e" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"E")}/>
+            <img src="/b.png" alt="b" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"B")}/>
+            <img src="/d.png" alt="d" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"D")}/>
+            <img src="/f.png" alt="f" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"F")}/>
+            <img src="/m.png" alt="m" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"M")}/>
+            <img src="/g.png" alt="g" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"G")}/>
+            <img src="/j.png" alt="j" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"J")}/>
+            <img src="/z.png" alt="z" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"Z")}/>
+            <img src="/l.png" alt="l" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"L")}/>
+            <img src="/n.png" alt="n" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"N")}/>
+            <img src="/q.png" alt="q" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"Q")}/>
+            <img src="/r.png" alt="r" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"R")}/>
+            <img src="/w.png" alt="w" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"W")}/>
+            <img src="/s.png" alt="s" width="3%" height="3%" onClick={(e)=>this.onTrainChange(e,"S")}/>
             <br/><br/><br/>
 
       <Row>
@@ -215,7 +209,7 @@ class App extends React.Component {
       <Row>
         <Col span={8} offset={8}>
             <br />
-          <h3 style = {{display:displayError} } >Our mistake: we couldn't perform analysis with the selected inputs</h3>
+          <h3 style = {{display:displayError} } >Analysis Error: we couldn't find similar trips in our historical data.</h3>
           <Statistic style = {{display:displayResults} } title="Expected commute time" value={analysisTime} suffix={'min'} />
           <br /><br />
           
