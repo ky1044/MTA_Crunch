@@ -220,8 +220,10 @@ class App extends React.Component {
           <div className="footer">
             <img src="./bacLogo.png" alt="bottom-bac-logo" width="100%" height='20%'/>
           </div>
+          
         </Col>
       </Row>
+      <br /><br /><br /><br />
       
     </div>
     );
