@@ -32,12 +32,12 @@ class App extends React.Component {
     this.state = {
       selectedDepartureStation: table["1"][0],
       selectedArrivalStation: table["1"][table["1"].length-2],
-      selectedArrivalTime: null,
+      selectedArrivalTime: "0900",
       selectedArrivalDate:"Weekday",
       selectedLine:"1",
       data: null,
       request:null,
-      analysisTime:"0900",
+      analysisTime:null,
       showResponse:false,
       displayResults:"none",
       displayConfidence:"none",
@@ -57,6 +57,9 @@ class App extends React.Component {
     this.onTimeChange = this.onTimeChange.bind(this);
 
   }
+  componentDidMount(){
+    document.body.style = 'background: #f5f5f5;';
+  }
 
   onDateChange = e => {
     console.log('radio checked', e.target.value);
@@ -67,8 +70,7 @@ class App extends React.Component {
 
   async onTrainChange(e,nowline){
     e.preventDefault();
-    console.log(e);
-    console.log('line changed:', nowline);
+    console.log('train changed:', nowline);
     await this.setState({
       selectedLine: nowline,
     });
@@ -77,7 +79,6 @@ class App extends React.Component {
       selectedArrivalStation:table[this.state.selectedLine][table[this.state.selectedLine].length-2],
     });
 
-    console.log(this.state.selectedLine);
   }
 
   onSliderChange(newConfidence){
@@ -115,21 +116,15 @@ class App extends React.Component {
       }
       
     }
-
     )
     console.log(this.state.analysisTime)
     console.log(this.state.responseData)
-
   }
-
 
   render() {
     const {selectedDepartureStation, selectedArrivalStation,selectedLine,selectedArrivalDate,selectedArrivalTime,analysisTime,displayResults,confidenceTime,displayConfidence,confidenceValue,displayError} = this.state;
 
-     //const diff = selectedDepartureStation.arrivalTime - selectedArrivalStation.arrivalTime;
-
     return (
-
       <div className="App" style={{backgroundColor: "#f5f5f5"}}>
 
       <Row>
@@ -228,11 +223,9 @@ class App extends React.Component {
           <Slider style = {{display:displayResults} } defaultValue={50} min={1} max={100} onChange={this.onSliderChange}/>
           <br />
           <Statistic style = {{display:displayConfidence} } title={confidenceValue+"% of the historical commutes were"} value={confidenceTime} suffix={'mins or shorter'} />
-            <br/><br/><br/>
           <div className="footer">
             <img src="./bacLogo.png" alt="bottom-bac-logo" width="100%" height='20%'/>
           </div>
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </Col>
       </Row>
       
